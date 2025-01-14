@@ -39,7 +39,7 @@ export class Elixir extends Potion implements ElixirInterface {
             if (effectWords.length === 3) {
                 prefix = effectWords[0];
             } else if (effectWords.length === 2) {
-                prefix = effectWords[0]; 
+                prefix = ''; 
             } else if (effectWords.length === 1) {
                 prefix = ''; 
             }
@@ -65,11 +65,10 @@ export class Elixir extends Potion implements ElixirInterface {
                     break;
             }
 
-            const effectType = effectWords[1];
+            const effectType = effectWords.length === 3 ? effectWords[1] : effectWords[0]
             const affectedAttribute = effectWords.length === 3 ? effectWords[2] : effectWords[1];
 
             console.log("Prefix:", prefix, "Type:", effectType, "Attribute:", affectedAttribute);
-
             effect = effectWords;
             return prefixValue;
         });
@@ -96,14 +95,16 @@ export class Elixir extends Potion implements ElixirInterface {
 
         console.log("Weakest prefix determined:", weakestPrefix);
 
-        const effectType: string = effect[1];
-        const affectedAttribute: string = effect[effect.length - 1];
+        const effectType: string = effect.length === 3 ? effect[1] : effect[0];
+        const affectedAttribute: string = effect.length === 3 ? effect[2] : effect[1];
+        console.log(effectType, effect)
         const capitalizedAttribute: string = affectedAttribute 
             ? affectedAttribute.charAt(0).toUpperCase() + affectedAttribute.slice(1) 
             : '';
 
         if (effectType === 'boost' && affectedAttribute) {
             modifiers[affectedAttribute] += weakestValue; 
+            console.log(modifiers)
         } else if (effectType === 'calm') {
             modifiers['insanity'] -= weakestValue; 
         }

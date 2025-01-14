@@ -65,10 +65,10 @@ describe('diferentes valores de tipo', () => {
 })
 describe('Cuando no todos los ingredientes no contine increase', () => {
     it('El nombre de la Pocion no contendrá la palabra "Essence"', () => {
-        const mockIngredients = [ INGREDIENTS[0], INGREDIENTS[1]];
+        const mockIngredients = [ INGREDIENTS[0], INGREDIENTS[52]];
         const potion = PotionFactory.createPotion(mockIngredients, DISEASES)
         console.log(potion);
         
-        expect(potion.name).toContain('Essence');
+        expect(potion.name).not.toContain('Essence');
     })
 })

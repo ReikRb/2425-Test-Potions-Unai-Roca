@@ -5,6 +5,7 @@ export class Potion implements PotionInterface {
     name: string;
     type: string;
     modifiers: Modifiers;
+    duration?: number 
   
     constructor(name = '', type = '', modifiers: Modifiers = { 
         intelligence: 0, 

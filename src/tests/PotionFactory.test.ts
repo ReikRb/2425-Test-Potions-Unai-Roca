@@ -2,23 +2,16 @@ import { PotionFactory } from "../PotionFactory";
 import { DISEASES, INGREDIENTS } from "./mocks";
 
 describe('Cuando todos los ingredientes llevan el efecto "Restore".', () => {
-    it('El nombre deberá ser el correspondiente. Antidote of + "nombre enfermedad".', async () => {
-      PotionFactory.createPotion
-      const mockIngredients = [ ];
-      "lesser_restore_hit_points",
-      "lesser_restore_constitution"
-      const mockSetCurrentAttributes = jest.fn();
-  
-      
-  
-    //   expect(mockSetCurrentAttributes).toHaveBeenCalledWith({
-    //     charisma: 102,
-    //     constitution: 240,
-    //     dexterity: 174,
-    //     insanity: 117,
-    //     intelligence: 142,
-    //     strength: 253,
-    //   });
-    
+  const mockIngredients = [ INGREDIENTS[20], INGREDIENTS[14]];
+  const potion = PotionFactory.createPotion(mockIngredients, DISEASES)
+    it('El nombre deberá ser el correspondiente. Antidote of + "nombre enfermedad".', () => {
+      expect(potion.name).toBe("Antidote of Gravechill");
+    });
+    it('Los atributos tendran el valor dentro del rango de valores', () => {
+      expect(potion.modifiers.constitution).toBeGreaterThanOrEqual(6)
+      expect(potion.modifiers.constitution).toBeLessThanOrEqual(9)
+
+      expect(potion.modifiers.hit_points).toBeGreaterThanOrEqual(40)
+      expect(potion.modifiers.hit_points).toBeLessThanOrEqual(50)
     });
   });

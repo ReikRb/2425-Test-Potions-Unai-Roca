@@ -74,8 +74,15 @@ export class Elixir extends Potion implements ElixirInterface {
         });
 
         console.log("Prefix values:", prefixValues);
-
-        const weakestValue = Math.min(...prefixValues);
+        let totalValue = 0
+        for (let i = 0; i < prefixValues.length; i++) {
+            const value = prefixValues[i];
+            totalValue += value
+        }
+        totalValue = totalValue / prefixValues.length
+        totalValue = Math.floor(totalValue/5) *5
+        if (totalValue < 5) totalValue = 5
+        const weakestValue = totalValue
         console.log("Weakest value:", weakestValue);
 
         switch (weakestValue) {

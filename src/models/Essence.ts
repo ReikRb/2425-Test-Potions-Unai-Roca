@@ -8,6 +8,10 @@ export class Essence extends Potion implements EssenceInterface {
     }
 
     static create(ingredients: { effects: string[] }[]): Essence | null {
+        if (ingredients.length < 2 || ingredients.length > 4) {
+            console.log("Invalid number of ingredients:", ingredients.length);
+            return null;
+        }
         let effect: string[] = [];
         let totalValue = 0;
         const modifiers = {
@@ -22,11 +26,22 @@ export class Essence extends Potion implements EssenceInterface {
 
         const prefixValues: number[] = ingredients.map(ingredient => {
             const effectWords: string[] = ingredient.effects[0].split('_');
-            if (effectWords.length < 3) effectWords.unshift('');
-
+             if (effectWords.length < 3) effectWords.unshift('');
+            
             let prefixValue = 0;
+            let prefix = '';
 
-            switch (effectWords[0]) {
+            if (effectWords.length === 3) {
+                prefix = effectWords[0];
+            } else if (effectWords.length === 2) {
+                prefix = ''; 
+            } else if (effectWords.length === 1) {
+                prefix = ''; 
+            }
+            if (effectWords[0] === 'increase') {
+                prefix = ''
+            }
+            switch (prefix) {
                 case 'least':
                     prefixValue = 5;   
                     break;
@@ -41,6 +56,8 @@ export class Essence extends Potion implements EssenceInterface {
                     break;
             }
 
+            console.log(prefixValue);
+            
             if (effectWords[1] === 'increase' && effectWords.length > 1) {
                 effect = effectWords; 
             }
@@ -65,7 +82,8 @@ export class Essence extends Potion implements EssenceInterface {
         }
 
         modifiers.hit_points = totalValue; 
-
+        console.log('modifiers: ', modifiers);
+        
         let weakestPrefix: string = 'greater'; 
 
         const effectPrefixes: string[] = ingredients.map(ingredient => {

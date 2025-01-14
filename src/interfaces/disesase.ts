@@ -7,7 +7,7 @@ export default interface DiseaseInterface {
     name: string;
     description: string;
     type: string;
-    antidote_effects: EffectsInterface[];
-    poison_effects: EffectsInterface[];
+    antidote_effects: string[];
+    poison_effects: string[];
     modifiers: ModifiersInterface;
 }

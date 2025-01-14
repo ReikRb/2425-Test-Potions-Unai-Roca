@@ -6,8 +6,6 @@ export default interface IngredientInterface {
     name: string;
     description: string;
     value: number;
-    effects: EffectsInterface[];
-    image: string;
+    effects: string[];
     type: string;
-    qty: number;
 }

@@ -1,0 +1,1 @@
+import { DISEASES, INGREDIENTS } from "./mocks";

@@ -31,16 +31,18 @@ export class Essence extends Potion implements EssenceInterface {
             let prefixValue = 0;
             let prefix = '';
 
-            if (effectWords.length === 3) {
+            if (effectWords.length >=3 ) {
                 prefix = effectWords[0];
             } else if (effectWords.length === 2) {
-                prefix = ''; 
+                prefix = effectWords[0]; 
             } else if (effectWords.length === 1) {
                 prefix = ''; 
             }
             if (effectWords[0] === 'increase') {
                 prefix = ''
             }
+            console.log('EffectWords: ', prefix);
+            
             switch (prefix) {
                 case 'least':
                     prefixValue = 5;   

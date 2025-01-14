@@ -10,7 +10,7 @@ import { DespairTonic } from "./models/TonicOfDownfall";
 import { Venom } from "./models/Venom";
 
 export class PotionFactory {
-  static createPotion(ingredients: IngredientInterface[], diseases: DiseaseInterface[]): Potion | null {
+  static createPotion(ingredients: IngredientInterface[], diseases: DiseaseInterface[]): Potion  {
 
     const effects = [['restore', 'positive'],
                      ['damage', 'negative'],

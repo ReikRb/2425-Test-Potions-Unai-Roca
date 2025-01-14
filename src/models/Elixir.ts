@@ -112,23 +112,25 @@ export class Elixir extends Potion implements ElixirInterface {
 
         const effectType: string = effect.length === 3 ? effect[1] : effect[0];
         const affectedAttribute: string = effect.length === 3 ? effect[2] : effect[1];
-        console.log(effectType, effect)
+        console.log(effectType, affectedAttribute)
         const capitalizedAttribute: string = affectedAttribute 
             ? affectedAttribute.charAt(0).toUpperCase() + affectedAttribute.slice(1) 
             : '';
-
-        if (effectType === 'boost' && affectedAttribute) {
-            modifiers[affectedAttribute] += weakestValue; 
-            console.log(modifiers)
-        } else if (effectType === 'calm') {
-            modifiers['insanity'] -= weakestValue; 
+        
+        if (affectedAttribute === 'calm') {
+            modifiers.insanity -= weakestValue; 
+        }else{
+            if (effectType === 'boost' && affectedAttribute) {
+                modifiers[affectedAttribute] += weakestValue; 
+            }
         }
 
         const potionName: string = 
             effectType === 'boost' && affectedAttribute
                 ? `${weakestPrefix} ${capitalizedAttribute} Elixir` 
                 : `${weakestPrefix} Calm Elixir`;
-
+        console.log(modifiers);
+        
         console.log("Final potion name:", potionName);
 
         return new Elixir(potionName, getDuration, modifiers);

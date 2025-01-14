@@ -8,6 +8,10 @@ export class Stench extends Potion implements StenchInterface {
     }
 
     static create(ingredients: { effects: string[] }[]): Stench | null {
+        if (ingredients.length < 2 || ingredients.length > 4) {
+            console.log("Invalid number of ingredients:", ingredients.length);
+            return null;
+        }
         let effect: string[] = [];
         let totalValue = 0;
         const modifiers = {

@@ -11,7 +11,10 @@ export class Venom extends Potion implements VenomInterface {
     }
 
     static create(ingredients: { effects: string[] }[]): Venom | null {
-
+        if (ingredients.length < 2 || ingredients.length > 4) {
+            console.log("Invalid number of ingredients:", ingredients.length);
+            return null;
+        }
         let effect: string[] = [];
         let weakestPrefix: string = 'greater';
         let getDuration: number = 0;
@@ -35,13 +38,13 @@ export class Venom extends Potion implements VenomInterface {
             if (effectWords.length === 3) {
                 prefix = effectWords[0];
             } else if (effectWords.length === 2) {
-                prefix = effectWords[0];
+                prefix = effectWords[0]; 
             } else if (effectWords.length === 1) {
                 prefix = ''; 
             }
 
             console.log("Extracted Prefix:", prefix);
-
+            if (prefix === 'setback') prefix = ''
             switch (prefix) {
                 case 'least':
                     prefixValue = 5;
@@ -61,7 +64,7 @@ export class Venom extends Potion implements VenomInterface {
                     break;
             }
 
-            const effectType = effectWords[1];
+            const effectType = effectWords.length === 3 ? effectWords[1] : effectWords[0]
             const affectedAttribute = effectWords.length === 3 ? effectWords[2] : effectWords[1];
 
             console.log("Prefix:", prefix, "Type:", effectType, "Attribute:", affectedAttribute);
@@ -71,8 +74,23 @@ export class Venom extends Potion implements VenomInterface {
         });
 
         console.log("Prefix values:", prefixValues);
-
-        const weakestValue = Math.min(...prefixValues);
+        let totalValue = 0
+        let totalDuration = 0
+        for (let i = 0; i < prefixValues.length; i++) {
+            const value = prefixValues[i];
+            totalValue += value
+            totalDuration += value === 5  ? 1 :
+                             value === 10 ? 1 :
+                             value === 15 ? 2 :
+                             3
+        }
+        totalValue = totalValue / prefixValues.length
+        totalDuration = Math.floor(totalDuration / prefixValues.length)
+        console.log(totalDuration);
+        getDuration = totalDuration
+        totalValue = Math.floor(totalValue/5) *5
+        if (totalValue < 5) totalValue = 5
+        const weakestValue = totalValue
         console.log("Weakest value:", weakestValue);
 
         switch (weakestValue) {
@@ -92,17 +110,19 @@ export class Venom extends Potion implements VenomInterface {
 
         console.log("Weakest prefix determined:", weakestPrefix);
 
-        const effectType: string = effect[1];
-        const affectedAttribute: string = effect[effect.length - 1];
+        const effectType: string = effect.length === 3 ? effect[1] : effect[0];
+        const affectedAttribute: string = effect.length === 3 ? effect[2] : effect[1];
+        console.log(effectType, affectedAttribute)
         const capitalizedAttribute: string = affectedAttribute 
             ? affectedAttribute.charAt(0).toUpperCase() + affectedAttribute.slice(1) 
             : '';
-
-        if (effectType === 'setback' && affectedAttribute) {
-            modifiers[affectedAttribute] -= weakestValue; 
-        } else if (effectType === 'frenzy') {
-            modifiers['insanity'] += weakestValue; 
-        }
+            if (affectedAttribute === 'frenzy') {
+                modifiers['insanity'] += weakestValue; 
+            }else{
+                if (effectType === 'setback' && affectedAttribute) {
+                    modifiers[affectedAttribute] -= weakestValue; 
+                }
+            }
 
         const potionName: string = 
             effectType === 'setback' && affectedAttribute

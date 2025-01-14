@@ -17,7 +17,15 @@ export class Antidote extends Potion implements AntidoteInterface {
       const disease = diseasesArray[i];
       const antidoteEffects = disease.antidote_effects;
       let match = true;
-      const diseaseModifiers = { ...disease.modifiers };
+      const diseaseModifiers = { 
+        intelligence: 0, 
+        dexterity: 0, 
+        constitution: 0, 
+        insanity: 0, 
+        charisma: 0, 
+        strength: 0,
+        hit_points: 0
+      };
 
       for (let j = 0; j < ingredientsArray.length; j++) {
         const ingredient = ingredientsArray[j];

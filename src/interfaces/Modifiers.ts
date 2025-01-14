@@ -6,6 +6,7 @@ export default interface ModifiersInterface {
     charisma: number;
     strength: number;
     hitpoints?: number;
+    hit_points?: number;
     attack?: number;
     defense?: number;
     magicres?: number;
